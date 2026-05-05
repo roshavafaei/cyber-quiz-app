@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizForge - Test your knowledge</title>
+    <link rel="stylesheet" href="/CSS/style.css" />
+    <link rel="stylesheet" href="CSS/normalize.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- SECTION 1: START SCREEN -->
+    <div id="start-screen" class="screen screen--active">
+      <div class="start-screen__inner">
+        <span class="start-screen__watermark" aria-hidden="true">QUIZ</span>
+        <div class="badge">10 Questions . Timed</div>
+        <h1 class="start-screen__title">
+          Quiz <br />
+          <em class="screen__title--accent">Forge</em>
+        </h1>
+        <p class="screen__description">
+          Ten questions. Thirty seconds each. Think you can spot the threats and
+          vulnerabilities? No hints. No retries. Just you and the clock.
+        </p>
+
+        <div class="screen__stats">
+          <div class="card stat-card">
+            <span class="stat-card__number">10</span>
+            <span class="stat-card__label">Questions</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-card__number">30s</span>
+            <span class="stat-card__label">Per question</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-card__number">4</span>
+            <span class="stat-card__label">Choices each</span>
+          </div>
+        </div>
+
+        <button id="start-btn" class="btn btn--primary">
+          <span>Start Quiz</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION 2: QUIZ SCREEN -->
+    <div id="quiz-screen" class="screen">
+      <header class="quiz-header">
+        <div class="quiz-header__left">
+          <span class="quiz-header__brand">QuizForge</span>
+
+          <div class="progress-bar">
+            <div id="progress-bar-fill" class="progress-bar__fill"></div>
+          </div>
+        </div>
+        <div class="quiz-header__right">
+          <span id="question-counter" class="quiz-header__counter"
+            >01 / 10</span
+          >
+
+          <div id="timer" class="timer">
+            <svg viewBox="0 0 44 44" aria-hidden="true">
+              <circle class="timer__track" cx="22" cy="22" r="18" />
+              <circle
+                id="timer-arc"
+                class="timer__arc"
+                cx="22"
+                cy="22"
+                r="18"
+              />
+            </svg>
+            <span id="timer-label" class="timer__label">30</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="live-score">
+        Score: <span id="live-score-value" class="live-score__value">0</span>
+      </div>
+
+      <main class="quiz-body">
+        <div id="question-card" class="card question-card">
+          <p id="question-tag" class="question-card__tag">Q1</p>
+          <p id="question-text" class="question-card__text">
+            Loading question...
+          </p>
+        </div>
+
+        <div id="options-grid" class="options-grid" role="list"></div>
+
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+
+        <button id="next-btn" class="btn btn--ghost btn--hidden">
+          <span>Next Question</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+      </main>
+    </div>
+
+    <!-- SECTION 3: RESULT SCREEN -->
+    <div id="result-screen" class="screen">
+      <div class="result-screen__inner">
+        <span class="result-screen__watermark" aria-hidden="true">DONE</span>
+
+        <div id="result-badge" class="badge">--</div>
+        <h2 class="result-screen__title">Quiz Complete</h2>
+
+        <div class="score-ring">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="score-ring__track" cx="60" cy="60" r="50" />
+            <circle
+              id="score-ring-arc"
+              class="score-ring__arc"
+              cx="60"
+              cy="60"
+              r="50"
+            />
+          </svg>
+          <div class="score-ring__label">
+            <span id="final-score" class="score-ring__number">0</span>
+            <span class="score-ring__denominator">10</span>
+          </div>
+        </div>
+
+        <p id="result-message" class="result-screen__message">--</p>
+
+        <div class="breakdown-grid">
+          <div class="card breakdown-grid__cell breakdown-grid__cell--wrong">
+            <span id="wrong-count" class="breakdown-grid__number">0</span>
+            <span class="breakdown-grid__label">Timed Out</span>
+          </div>
+        </div>
+
+        <button id="restart-btn" class="btn btn--primary">
+          <span>Restart Quiz</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="1 4 1 10 7 10" />
+            <path d="M3.51 15a9 9 0 1 0 .49-4.98" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!-- Generic Card -->
+<p class="preview-label">.card (base — add a component class on top)</p>
+<div class="card" style="padding: 1.5rem">
+  <p
+    style="
+      font-family: var(--font-family-mono);
+      color: var(--color-text-primary);
+    "
+  >
+    This is a plain .card. Pair it with a component class to get padding and
+    typography.
+  </p>
+</div>
+
+<!-- Start Card -->
+<p class="preview-label">.card + .stat-card</p>
+<div style="display: flex; gap: 1rem">
+  <div class="card stat-card">
+    <span class="stat-card__number">10</span>
+    <span class="stat-card__label">Questions</span>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-card__number">30s</span>
+    <span class="stat-card__label">Per question</span>
+  </div>
+</div>
+
+<!-- Question Card -->
+<p class="preview-label">.card + .question-card</p>
+<div class="card question-card">
+  <p class="question-card__tag">Q3</p>
+  <p class="question-card__text">What is the chemical symbol for gold?</p>
+</div>
