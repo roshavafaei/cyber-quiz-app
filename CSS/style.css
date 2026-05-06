@@ -79,7 +79,6 @@ button:focus-visible {
   outline-offset: 3px;
 }
 
-
 /* Screen */
 .screen {
   display: none;
@@ -105,6 +104,138 @@ button:focus-visible {
   }
 }
 
+/* Entrance Animation */
+/* -- Header: slides down from just above the viewport -- */
+@keyframes quiz-header-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -- Live score: fades and drifts in from the right -- */
+@keyframes quiz-score-enter {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/*
+  -- Question card: fades up with a horizontal scan-line sweep --
+  The ::after pseudo-element is a bright lime line that travels
+  left-to-right across the card once on entry, like a scanner
+  reading the question. It's removed (opacity 0) after the sweep.
+*/
+@keyframes quiz-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes quiz-card-scanline {
+  0%   { left: -4px;   opacity: 1; }
+  85%  { left: 100%;   opacity: 1; }
+  100% { left: 100%;   opacity: 0; }
+}
+
+/* -- Option buttons: each one fades up with a gentle rise -- */
+@keyframes quiz-option-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Applying animations when #quiz-screen is active ---- */
+
+/* Header drops down */
+#quiz-screen.screen--active .quiz-header {
+  animation: quiz-header-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0ms;
+}
+
+/* Live score drifts in from the right */
+#quiz-screen.screen--active .live-score {
+  animation: quiz-score-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 80ms;
+}
+
+/* Question card rises up */
+#quiz-screen.screen--active .question-card {
+  animation: quiz-card-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 160ms;
+}
+
+/*
+  Scan-line sweep on the question card.
+  The card needs position: relative (already set).
+  We use ::after for the traveling bright line.
+  animation-fill-mode: forwards keeps it invisible after it completes.
+*/
+#quiz-screen.screen--active .question-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -4px;
+  width: 3px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--color-accent) 40%,
+    rgba(232, 255, 71, 0.6) 50%,
+    var(--color-accent) 60%,
+    transparent 100%
+  );
+  box-shadow: 0 0 10px 3px rgba(232, 255, 71, 0.35);
+  pointer-events: none;
+  border-radius: 2px;
+  opacity: 0;
+  animation: quiz-card-scanline 0.7s ease-out forwards;
+  animation-delay: 260ms;
+}
+
+/*
+  Option buttons stagger in.
+  We target the first 4 .option children inside the grid.
+  Each one is delayed 60ms more than the previous.
+  The .u-fade-up class (applied by JS per-question) handles
+  subsequent question transitions — these only fire on quiz entry.
+*/
+#quiz-screen.screen--active .options-grid .option:nth-child(1) {
+  animation: quiz-option-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 280ms;
+}
+#quiz-screen.screen--active .options-grid .option:nth-child(2) {
+  animation: quiz-option-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 340ms;
+}
+#quiz-screen.screen--active .options-grid .option:nth-child(3) {
+  animation: quiz-option-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 400ms;
+}
+#quiz-screen.screen--active .options-grid .option:nth-child(4) {
+  animation: quiz-option-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 460ms;
+}
 
 /* Cards */
 .card {
@@ -112,7 +243,6 @@ button:focus-visible {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
 }
-
 
 /* Badges */
 .badge {
@@ -130,7 +260,6 @@ button:focus-visible {
   background-color: var(--color-accent-subtle);
   border: 1px solid var(--color-accent-border);
 }
-
 
 /* Buttons */
 .btn {
@@ -199,7 +328,6 @@ button:focus-visible {
 .btn--hidden {
   display: none;
 }
-
 
 /* Start Screen */
 #start-screen {
@@ -277,7 +405,6 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
-
 /* Start Card */
 .stat-card {
   display: flex;
@@ -311,7 +438,6 @@ button:focus-visible {
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
-
 
 /* Quiz Header */
 .quiz-header {
@@ -360,7 +486,6 @@ button:focus-visible {
   letter-spacing: 0.05em;
 }
 
-
 /* Progress Bar */
 .progress-bar {
   flex: 1;
@@ -378,7 +503,6 @@ button:focus-visible {
   border-radius: var(--radius-pill);
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
 
 /* Timer */
 .timer {
@@ -399,7 +523,6 @@ button:focus-visible {
   stroke: var(--color-border);
   stroke-width: 3;
 }
-
 
 /* Animated */
 .timer__arc {
@@ -447,7 +570,6 @@ button:focus-visible {
   animation: pulse 0.6s ease infinite;
 }
 
-
 /* Live Score */
 .live-score {
   align-self: flex-end;
@@ -466,7 +588,6 @@ button:focus-visible {
   color: var(--color-accent);
 }
 
-
 /* Quiz Body */
 #quiz-screen {
   padding: 0;
@@ -482,7 +603,6 @@ button:focus-visible {
   flex-direction: column;
   gap: var(--spacing-md);
 }
-
 
 /* Question Card */
 .question-card {
@@ -521,14 +641,12 @@ button:focus-visible {
   color: var(--color-text-primary);
 }
 
-
 /* Options Grid */
 .options-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-sm);
 }
-
 
 /* Options */
 .option {
@@ -648,7 +766,6 @@ button:focus-visible {
   }
 }
 
-
 /* Feedback */
 .feedback {
   font-family: var(--font-family-display);
@@ -668,7 +785,6 @@ button:focus-visible {
 .feedback--timeout {
   color: var(--color-timer-warning);
 }
-
 
 /* Result Screen */
 #result-screen {
@@ -744,7 +860,6 @@ button:focus-visible {
   max-width: 380px;
 }
 
-
 /* Score Ring */
 .score-ring {
   position: relative;
@@ -801,7 +916,6 @@ button:focus-visible {
   color: var(--color-text-muted);
 }
 
-
 /* Breakdown Grid */
 .breakdown-grid {
   display: grid;
@@ -847,7 +961,6 @@ button:focus-visible {
   color: var(--color-timer-warning);
 }
 
-
 /* Utilities */
 @keyframes fade-up {
   from {
@@ -863,7 +976,6 @@ button:focus-visible {
 .u-fade-up {
   animation: fade-up 0.3s var(--transition-slow) both;
 }
-
 
 /* Responsive */
 @media (max-width: 600px) {

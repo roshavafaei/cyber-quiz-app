@@ -165,7 +165,11 @@ function showScreen(screenEl) {
   [dom.startScreen, dom.quizScreen, dom.resultScreen].forEach((screen) => {
     screen.classList.remove("screen--active");
   });
-  screenEl.classList.add("screen--active");
+  void screenEl.offsetWidth;
+
+  requestAnimationFrame(() => {
+    screenEl.classList.add("screen--active");
+  });
 }
 
 /* QUIZ FLOW */
@@ -180,7 +184,10 @@ function startQuiz() {
   dom.liveScore.textContent = "0";
 
   showScreen(dom.quizScreen);
-  showQuestion();
+  
+  setTimeout(() => {
+    showQuestion();
+  }, 0);
 }
 
 // render the current question amd its choices
